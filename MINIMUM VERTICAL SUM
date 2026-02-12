@@ -1,0 +1,54 @@
+Given an ArrayList of ArrayLists arr[][]. Find the minimum vertical sum. ArrayLists inside the ArrayList arr may not be of the same size.
+
+Example:
+
+Input: arr = [[2, 3, 5], [1, 2], [1, 4, 5, 1]]
+Output: 1
+Explanation:
+2 3 5
+1 2
+1 4 5 1
+So, the vertical sums are [2+1+1], [3+2+4], [5+5], [1]. 1 is the minimum vertical sum.
+Input: arr = [[1, 2, 3, 4], [3, 3], [1, 2, 5, 9]]
+Output: 5
+Explanation:
+1 2 3 4
+3 3
+1 2 5 9
+So, the vertical sums are [1+3+1], [2+3+2], [3+5], [4+9]. 5 is the minimum vertical sum.
+Constraints:
+1  <=  arr.size()  <=  103
+1  <=  arr.get(i).size()  <=  103
+1  <=  arrij  <=  105
+
+OUTPUT:
+import java.util.*;
+
+class Solution {
+    public static int minimumVerticalSum(ArrayList<ArrayList<Integer>> arr) {
+
+        int maxCols = 0;
+
+        // Step 1: find maximum number of columns
+        for (ArrayList<Integer> row : arr) {
+            maxCols = Math.max(maxCols, row.size());
+        }
+
+        int[] colSum = new int[maxCols];
+
+        // Step 2: calculate column-wise sums
+        for (ArrayList<Integer> row : arr) {
+            for (int j = 0; j < row.size(); j++) {
+                colSum[j] += row.get(j);
+            }
+        }
+
+        // Step 3: find minimum column sum
+        int min = Integer.MAX_VALUE;
+        for (int sum : colSum) {
+            min = Math.min(min, sum);
+        }
+
+        return min;
+    }
+}
